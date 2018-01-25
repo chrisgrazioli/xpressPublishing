@@ -1,5 +1,6 @@
 const express=require('express');
 const artistsRouter= express.Router();
+
 const sqlite3=require('sqlite3');
 const db =  new sqlite3.Database(process.env.TEST_DATABASE || './database.sqlite');
 
@@ -20,13 +21,26 @@ artistsRouter.get('/', (req, res, next)=>{
     if(error){
       next(error);
     }else{
-      res.status(200).json({artists:rows});
+      res.status(200).json({artists : rows});
     }
   });
 });
 
 artistsRouter.get('/:artistID',(req,res,next)=>{
-  res.status(200).json({artist:req.artist});
+  res.status(200).json({artist : req.artist});
+});
+
+artistsRouter.post('/', (req, res, next)=>{
+  const name = req.body.artist.name;
+  const dateOfBirth = req.body.artist.dateOfBirth;
+  const biography = req.body.artist.biography;
+
+  if(!name || !dateOfBirth || !biography){
+    return res.sendStatus(400);
+    //what is difference between res.sendStatus(400); and
+    //return res.sendStatus(400);
+  }
+
 });
 
 module.exports= artistsRouter;
