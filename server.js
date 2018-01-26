@@ -9,11 +9,19 @@ const apiRouter= require('./api/api');
 
 const PORT= process.env.PORT || 4000;
 
-app.use('/api', apiRouter);
+//app.use(bodyParser.json());
+//app.use(errorhandler());
+//app.use(cors());
+//app.use(morgan('dev'));
+
+//apparently middleware order matters??
+// THANK YOU https://youtu.be/msw1D8oSw5M?t=13m50s
 app.use(bodyParser.json());
-app.use(errorhandler());
 app.use(cors());
-app.use(morgan('dev'));
+
+app.use('/api', apiRouter);
+
+app.use(errorhandler());
 
 app.listen(PORT, ()=>{
   console.log(`Server listening on port ${PORT}`);
