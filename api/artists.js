@@ -83,9 +83,10 @@ artistsRouter.delete('/:artistID', (req, res, next)=>{
         if(error){
           next(error);
         }else{
-          res.status(200).json({artist :row});
+          res.status(200).json({artist: row});
         }
       });
+
     }
   });
 });
